@@ -118,6 +118,33 @@ The remainder of this report is structured as follows:
     \item \textbf{Section 6} highlights potential future enhancements and growth opportunities for Talk Assist before concluding the paper.
 \end{itemize}
 
+%SECTION 2 
 
+\section{Proposed System/Application/Study}
+
+\subsection{Overview}
+
+TalkAssist is designed to support individuals across a broad spectrum of visual impairments. To effectively serve this user group, the system is built around three core requirements: a fully non-visual interface, highly accurate text-to-speech and natural language processing capabilities, and complete hands-free operation through voice interaction. In this section, we provide an overview of our project requirements, describe our system architecture, and walk through the major components of our implementation. We also highlight the core computer science and software engineering principles applied throughout the project including time-complexity considerations, natural language processing techniques, API integration, and system integration techniques.
+
+\subsection{Project Reqiurements}
+\subsubsection{User Classes}
+There are two distinct user classes. Application Users are individuals who interact directly with TalkAssist. This group includes users with visual impairments who rely on fully voice-driven, non visual interaction. Their primary goal is to communicate with the chatbot, receive accurate spoken responses, and operate the system entirely hands-free. Event Management Users rely on TalkAssist to manage time based tasks such as reminders, alerts, and scheduled notifications. To stay organized without requiring visual involvement, these users rely on precise voice-controlled scheduling and clear audio confirmations.
+\subsubsection{Functional Reqiurments}
+\begin{itemize}
+\item\textbf{Front End GUI:} Talk Assist requires a simple and clear front-end GUI that is able to transcribe conversations and also indicate when either offline or online mode is currently running. The GUI must also contain a reminders page that clearly shows each active reminder and is able to differentiate between active and inactive reminders.
+
+\item\textbf{Online Mode:} Talk Assist requires an online mode that is able to perform commands such as telling the time, weather, date, and setting reminders. It should also be able to search the web for answers to questions asked by the user. We require this online connection as Talk Assist’s online mode has many more capabilities and is meant for at-home use.
+
+\item\textbf{Offline Mode:} Talk Assist requires a lightweight offline mode that is able to perform similar but more basic tasks than its online mode. Offline mode should still be able to tell time, weather, date, and set reminders. There are no web search capabilities, but this is offset by a basic calculation tool that allows offline mode to perform operations requested by the user. Offline mode is lightweight due to this mode being intended for out-of-home use, such as while walking or grocery shopping.
+
+\item\textbf{Wake Up Word \& Hot Key:} Due to Talk Assist’s hands-off approach to operation, we require wake-up word and hotkey capabilities. The wake-up word is meant to activate the program and start a conversation once detected, allowing the user to avoid restarting the program to begin a new conversation. The hotkey is required to allow the user to launch the application and begin microphone recording for wake-up word activation, enabling them to avoid navigating a screen and streamlining the application launch process.
+\end{itemize}
+\subsubsection{Non-Functional Reqiurements}
+\begin{itemize}
+\item\textbf{Accessibility:}The system must be fully usable without visual navigation (screen-reader friendly, voice-first interaction)
+\item\textbf{Usability:}The chatbot must have a simple, natural, and intuitive voice-based interaction flow. Responses should be clear, concise, and easy to understand for users with varying levels of technical skill
+\item\textbf{Scalability:}App should support integration with additional features ( calendars, weather APIs, reminders) without major redesign
+\item\textbf{Portability:}Should scale to run on multiple platforms in future (desktop and mobile) with minimal configuration
+\end{itemize}
 
 \end{document}
