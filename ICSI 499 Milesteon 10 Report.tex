@@ -147,4 +147,60 @@ There are two distinct user classes. Application Users are individuals who inter
 \item\textbf{Portability:}Should scale to run on multiple platforms in future (desktop and mobile) with minimal configuration
 \end{itemize}
 
+
+%Section 4
+
+\section*{4 \quad Legal and Ethical Practices}
+\addcontentsline{toc}{section}{4 Legal and Ethical Practices}
+
+\subsection*{4.1 \quad Legal Considerations}
+\addcontentsline{toc}{subsection}{4.1 Legal Considerations}
+
+\textbf{Use of Third-Party Libraries:}
+Only speech-to-text, text-to-speech, and API tools with proper open-source or permissive licenses (MIT, Apache, etc.) were used to avoid copyright or IP violations.
+
+\textbf{Reminder Data Storage:}
+\begin{itemize}
+    \item TalkAssist does not store voice recordings.
+    \item It does save reminder text (e.g., ``Take medication at 3 PM'') in a local JSON file.
+    \item Because this information may be personal or sensitive, all stored data remains on the user's device.
+\end{itemize}
+
+\textbf{Privacy and Data Protection:}
+Local-only storage reduces risks related to major data-protection laws (GDPR, state privacy laws). Users are informed that reminder text is stored to ensure transparency.
+
+\textbf{Online Service Compliance:}
+When TalkAssist uses online features (e.g., weather, general information), the system abides by the terms and usage limits of each external API.
+
+\textbf{Liability Reduction:}
+Clear limitations are placed on high-risk tasks, and the assistant avoids giving medical, legal, or dangerous instructions.
+
+\vspace{1em}
+
+\subsection*{4.2 \quad Ethical Considerations}
+\addcontentsline{toc}{subsection}{4.2 Ethical Considerations}
+
+\textbf{Protection of Vulnerable Users:}
+Designed for individuals with visual impairments, the system avoids misleading, unsafe, or unclear responses.
+
+\textbf{Privacy \& User Consent:}
+\begin{itemize}
+    \item Reminders may contain private routines or sensitive tasks.
+    \item Users are informed that reminders are stored locally and may delete them at any time.
+    \item No hidden data collection or cloud storage is used.
+\end{itemize}
+
+\textbf{Data Minimization:}
+Only essential reminder information is saved—nothing more.
+
+\textbf{User Autonomy \& Control:}
+Users can freely create, edit, or remove reminders; the assistant never makes decisions without explicit instruction.
+
+\textbf{Transparency of Modes:}
+The bot clearly distinguishes between offline processing (fully private) and online processing (which may contact external APIs).
+
+\textbf{Inclusivity and Accessibility:}
+Every feature is designed to enhance independence, clarity, and accessibility for visually impaired users.
+
+
 \end{document}
