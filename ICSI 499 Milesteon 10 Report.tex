@@ -126,10 +126,12 @@ The remainder of this report is structured as follows:
 
 TalkAssist is designed to support individuals across a broad spectrum of visual impairments. To effectively serve this user group, the system is built around three core requirements: a fully non-visual interface, highly accurate text-to-speech and natural language processing capabilities, and complete hands-free operation through voice interaction. In this section, we provide an overview of our project requirements, describe our system architecture, and walk through the major components of our implementation. We also highlight the core computer science and software engineering principles applied throughout the project including time-complexity considerations, natural language processing techniques, API integration, and system integration techniques.
 
-\subsection{Project Reqiurements}
+\subsection{Project Requirements}
+
 \subsubsection{User Classes}
 There are two distinct user classes. Application Users are individuals who interact directly with TalkAssist. This group includes users with visual impairments who rely on fully voice-driven, non visual interaction. Their primary goal is to communicate with the chatbot, receive accurate spoken responses, and operate the system entirely hands-free. Event Management Users rely on TalkAssist to manage time based tasks such as reminders, alerts, and scheduled notifications. To stay organized without requiring visual involvement, these users rely on precise voice-controlled scheduling and clear audio confirmations.
-\subsubsection{Functional Reqiurments}
+
+\subsubsection{Functional Requirements}
 \begin{itemize}
 \item\textbf{Front End GUI:} Talk Assist requires a simple and clear front-end GUI that is able to transcribe conversations and also indicate when either offline or online mode is currently running. The GUI must also contain a reminders page that clearly shows each active reminder and is able to differentiate between active and inactive reminders.
 
@@ -139,7 +141,8 @@ There are two distinct user classes. Application Users are individuals who inter
 
 \item\textbf{Wake Up Word \& Hot Key:} Due to Talk Assist’s hands-off approach to operation, we require wake-up word and hotkey capabilities. The wake-up word is meant to activate the program and start a conversation once detected, allowing the user to avoid restarting the program to begin a new conversation. The hotkey is required to allow the user to launch the application and begin microphone recording for wake-up word activation, enabling them to avoid navigating a screen and streamlining the application launch process.
 \end{itemize}
-\subsubsection{Non-Functional Reqiurements}
+
+\subsubsection{Non-Functional Requirements}
 \begin{itemize}
 \item\textbf{Accessibility:}The system must be fully usable without visual navigation (screen-reader friendly, voice-first interaction)
 \item\textbf{Usability:}The chatbot must have a simple, natural, and intuitive voice-based interaction flow. Responses should be clear, concise, and easy to understand for users with varying levels of technical skill
@@ -202,5 +205,45 @@ The bot clearly distinguishes between offline processing (fully private) and onl
 \textbf{Inclusivity and Accessibility:}
 Every feature is designed to enhance independence, clarity, and accessibility for visually impaired users.
 
+%Section 5
+\section*{5 \quad Effort Sharing}
+
+\begin{table}[h!]
+\centering
+\caption{Effort sharing}
+\scriptsize                     % smaller font for this table
+\setlength{\tabcolsep}{3pt}     % reduce horizontal padding
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Team size} &
+\textbf{Joint efforts} &
+\textbf{Michael Angamarca} &
+\textbf{Isaac Jean Gardy Mardy} &
+\textbf{Ayan Cooper} &
+\textbf{Kyle Batchelor} \\
+\hline
+4 & J (30\%) & I (17.5\%) & I (17.5\%) & I (17.5\%) & I (17.5\%) \\
+\hline
+\end{tabular}
+
+\vspace{2mm}
+\footnotesize
+J = description of tasks jointly performed \\
+I = description of tasks individually performed
+\end{table}
+
+%Section 6
+\section*{6 \quad Conclusion and Future Work}
+
+The development of TalkAssist allowed us to design and implement an accessible
+voice driven assistant that supports both online and offline functionality for
+visually impaired users. Through this project, we learned how to integrate
+speech technologies, manage system modes, and design intuitive interactions that
+reduce dependence on visual interfaces. While the current system performs core
+tasks reliably, future work includes expanding offline capabilities, improving
+natural language understanding, and integrating additional online services such
+as calendars and navigation. Long term improvements may also include mobile
+platform support and a more advanced wake word system to further enhance
+accessibility and user independence.
 
 \end{document}
