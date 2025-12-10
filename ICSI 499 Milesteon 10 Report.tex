@@ -150,6 +150,290 @@ There are two distinct user classes. Application Users are individuals who inter
 \item\textbf{Portability:}Should scale to run on multiple platforms in future (desktop and mobile) with minimal configuration
 \end{itemize}
 
+%Section 3
+
+\section\textbf{Experimental Design and Testing}
+
+This section presents the experimental methodology used to evaluate TalkAssist across its online mode, offline mode, voice-driven functionality, and graphical user interface (GUI) components. The goal of these experiments is twofold: \textbf{verification} – confirming that TalkAssist’s implemented features behave correctly – and \textbf{validation} – determining whether the system adequately addresses the needs of visually impaired users who rely on fully voice-operated systems. Tests were conducted by multiple team members, each focusing on different subsystems: online speech recognition reliability, offline speech-to-text and reminder management, mathematical query handling, and frontend accessibility. Collectively, these experiments provided a comprehensive assessment of TalkAssist’s usability, accuracy, and robustness in realistic user conditions.
+
+\subsection\textbf{3.1 Experimental Setup}
+
+We designed five experiments, numbered by subsystem:
+
+\begin{enumerate}
+    \item Online Voice-Only Navigation Test
+    \item Online Speech Recognition Across Recording Environments
+    \item Accuracy of Mathematical Query Parsing
+    \item Offline Speech Recognition and Offline Reminder Management
+    \item Frontend Recording-Indicator Behavior (GUI Test)
+\end{enumerate}
+
+Each experiment was conducted to target different risk areas, including voice accuracy, robustness under noise, correct command interpretation, deterministic behavior offline, and the accessibility of the user interface for non-visual users. Because TalkAssist is intended for visually impaired users, tests emphasized hands-free usage, speech-only interaction, and clarity of system feedback.
+
+\subsubsection\textbf{3.1.1 Experiment 1: Online Voice-Only Navigation Test}
+
+\textbf{Objective:} To determine whether TalkAssist’s online version can be fully navigated without visual access to the GUI.
+
+\textbf{Setup:} The tester shut their eyes or used a pillowcase to simulate blindness. The online version of TalkAssist ran on a Windows laptop in a quiet room. Only voice commands were used to navigate between features such as time queries, reminders, and basic Q\&A responses.
+
+\textbf{Environment \& Tools:}
+\begin{itemize}
+    \item Chrome browser running TalkAssist web interface
+    \item Built-in laptop microphone
+    \item No keyboard or mouse input permitted
+\end{itemize}
+
+\textbf{Purpose:} To validate whether TalkAssist meets its accessibility goal: functioning as a screen-reader-free, voice-only assistant.
+
+\subsubsection\textbf{3.1.2 Experiment 2: Online Speech Recognition Across Varying Recording Environments}
+
+\textbf{Objective:} To test the reliability of online speech recognition under changes in microphone quality and ambient noise.
+
+\textbf{Setup:} Several recording environments were tested:
+
+\begin{itemize}
+    \item Quiet bedroom
+    \item Medium-noise room (TV and conversation noise)
+    \item Crowded living room
+\end{itemize}
+
+Additionally, multiple microphones were used (laptop mic vs. USB headset).
+
+\textbf{Purpose:} To determine if TalkAssist maintains voice recognition accuracy across common, real-world usage environments, as many visually impaired users rely on built-in laptop hardware that varies widely in quality.
+
+\subsubsection\textbf{3.1.3 Experiment 3: Mathematical Query Parsing}
+
+\textbf{Objective:} To test the chatbot’s ability to correctly handle mathematical computations using natural language.
+
+\textbf{Setup:} A series of spoken math prompts were used, including:
+
+\begin{itemize}
+    \item Trigger-word-based commands: “What is 5 plus 7?”
+    \item Multi-phrase queries: “Calculate the sum of 5 and 4.”
+    \item Ambiguous phrases involving “times” to ensure the bot distinguishes multiplication from time queries.
+\end{itemize}
+
+\textbf{Purpose:} To validate the correctness of the math parser and ensure disambiguation logic prevents false triggers.
+
+\subsubsection\textbf{3.1.4 Experiment 4: Offline Speech Recognition \& Reminder Management}
+
+\textbf{Objective:} To evaluate TalkAssist’s offline functionality, which is critical for accessibility in situations where internet access is unavailable.
+
+\textbf{Setup:}
+
+\textbf{Hardware:} Windows 11 laptop, USB microphone
+
+\textbf{Software:} Whisper base model (70M parameters) running locally, Python 3.10 virtual environment
+
+\textbf{Environments:}
+\begin{itemize}
+    \item Quiet room
+    \item Medium background noise (open window, distant voices)
+\end{itemize}
+
+Offline module tests included:
+
+\begin{itemize}
+    \item Speech-to-text accuracy
+    \item Local reminder creation, storage, and retrieval using \texttt{reminders.json}
+    \item Offline text-to-speech playback
+\end{itemize}
+
+\textbf{Purpose:} To ensure the assistant remains usable in scenarios with poor connectivity: highly relevant to low-vision users in unpredictable environments.
+
+\subsubsection\textbf{3.1.5 Experiment 5: GUI Recording-Indicator Behavior}
+
+\textbf{Objective:} To test whether the TalkAssist interface correctly indicates when the system is actively listening for user input. This behavior is important for accessibility because visually impaired users rely on consistent feedback to understand when it is their turn to speak.
+
+\textbf{Setup:} The tester interacted with TalkAssist using standard voice commands and manually observed the single available frontend indicator:
+
+\begin{itemize}
+    \item The recording indicator, which is designed to appear only when user audio input is being captured.
+\end{itemize}
+
+\textbf{Purpose:} To determine whether the recording indicator switches states properly during typical voice interactions and whether it provides reliable feedback to users who depend on nonvisual cues.
+
+\textbf{Known issue uncovered:} The bot continues listening during its own speech, causing the recording indicator to remain active incorrectly. This experiment helped isolate whether the issue originated from frontend logic, asynchronous Web Speech API behavior, or backend latency.
+
+\subsection\textbf{3.2 Dataset}
+
+Because TalkAssist relies heavily on natural language input, each experiment generated a dataset of spoken commands and system outputs. The datasets are described below per experiment.
+
+\subsubsection*\textbf{Dataset for Experiments 1 \& 2 (Online Mode)}
+
+\begin{itemize}
+    \item 2 internal testers simulating visually impaired usage
+    \item $\sim$60 navigation and Q\&A voice commands
+    \item 40 environmental speech samples across three noise levels
+    \item Microphone variability tests across 2 devices
+\end{itemize}
+
+Data included:
+\begin{itemize}
+    \item STT transcriptions
+    \item Intent parser outputs
+    \item Success/failure flags for navigation tasks
+\end{itemize}
+
+\subsubsection*\textbf{Dataset for Experiment 3 (Math Parsing)}
+
+\begin{itemize}
+    \item 25 spoken mathematical expressions
+    \item Mix of operator-based and phrase-based queries
+    \item Misinterpretation cases logged for debugging
+\end{itemize}
+
+\subsubsection*\textbf{Dataset for Experiment 4 (Offline Mode)}
+
+\begin{itemize}
+    \item 110 spoken test phrases
+    \item Whisper accuracy logs
+    \item \texttt{reminders.json} operations (creation, deletion, listing)
+\end{itemize}
+
+\subsubsection*\textbf{Dataset for Experiment 5 (GUI Test)}
+
+Collected via frontend logging:
+
+\begin{itemize}
+    \item 30 turn-taking sequences
+    \item 30 observation logs of indicator behavior
+    \item Timestamps of listening vs. speaking phases
+\end{itemize}
+
+\subsection\textbf{3.3 Results and Analysis}
+
+\subsubsection\textbf{3.3.1 Experiment 1 Results: Online Voice-Only Navigation}
+
+Users were able to navigate most features without visual assistance. Event-level tasks (time queries, general questions, reminder queries) succeeded consistently.
+
+\textbf{Failure point:} accessing the reminders page required too strict phrasing and occasionally misrouted the user.
+
+This indicates a need for broader intent recognition or additional aliases for “open reminders.”
+
+\subsubsection\textbf{3.3.2 Experiment 2 Results: Voice Recognition Across Environments}
+
+TalkAssist functioned reliably in quiet and medium-noise environments. When used with a poor-quality laptop microphone:
+
+\begin{itemize}
+    \item Misrecognitions increased
+    \item Reminder texts occasionally stored incorrect words
+    \item Long commands were more error-prone
+\end{itemize}
+
+This matches expected patterns in consumer STT systems: microphone quality is the primary determinant of accuracy.
+
+\subsubsection\textbf{3.3.3 Experiment 3 Results: Mathematical Query Parsing}
+
+All math expressions produced correct results. The implemented rule to disambiguate:
+
+\begin{itemize}
+    \item “times = multiplication”
+    \item “time = current time request”
+\end{itemize}
+
+worked as intended, preventing false time-query activations.
+
+This confirms the math parser’s dependability and robustness to ambiguous phrasing.
+
+\subsubsection\textbf{3.3.4 Experiment 4 Results: Offline Whisper STT \& Reminder System}
+
+\textbf{Whisper Offline Accuracy}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Test Phrases} & \textbf{Correct} & \textbf{Accuracy} \\
+\hline
+110 & 88 & 80\% \\
+\hline
+\end{tabular}
+\caption{Offline Whisper STT accuracy results}
+\end{table}
+
+Whisper performed slightly worse than online STT but remained usable for reminders and date/time queries. Whisper’s deterministic behavior significantly improved reliability for structured tasks such as reminders.
+
+\textbf{Reminder System}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Task} & \textbf{Success Rate} \\
+\hline
+Set Reminder & 100\% \\
+List Reminders & 100\% \\
+\hline
+\end{tabular}
+\caption{Offline reminder system performance}
+\end{table}
+
+Offline mode proved highly stable because it avoids ambiguity and latency associated with large online models.
+
+\subsubsection\textbf{3.3.5 Experiment 5 Results: GUI Indicator Test}
+
+Results were summarized in the following table:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Test Case} & \textbf{Expected Behavior} & \textbf{Observed Behavior} & \textbf{Success} \\
+\hline
+Bot Speaking & Indicator OFF & Indicator remained ON & No \\
+Bot finished speaking & Indicator ON & Correct & Yes \\
+Rapid turn-taking & Indicator alternated correctly & Sometimes lagged & Somewhat \\
+Long bot responses & Indicator OFF & Indicator ON entire duration & No \\
+\hline
+\end{tabular}
+\caption{GUI indicator test results}
+\end{table}
+
+Analysis: The issue stems from the online SpeechRecognition API continuously streaming even during bot speech. Because TalkAssist is voice-driven, this causes confusion for a visually impaired user who cannot rely on visual timing cues.
+
+\subsubsection\textbf{3.3.6 Expected and Unexpected Findings}
+
+\textbf{Expected:}
+\begin{itemize}
+    \item Whisper offline performs slightly worse than online STT
+    \item Math parser reliably handles structured phrases
+    \item Online navigation works well in quiet environments
+\end{itemize}
+
+\textbf{Unexpected:}
+\begin{itemize}
+    \item Offline reminders were more reliable than online reminders
+    \item GUI indicator issue was persistent across all tests
+    \item Microphone quality had a greater impact than anticipated
+\end{itemize}
+
+\subsubsection\textbf{3.3.7 Remarkable Findings}
+
+The most notable positive finding was the robustness of offline reminder functionality.
+
+Unlike online mode, offline mode has:
+
+\begin{itemize}
+    \item No LLM-based ambiguity
+    \item Deterministic parsing
+    \item Zero network latency
+\end{itemize}
+
+As a result, offline mode became the most stable subsystem, which is valuable for visually impaired users who may not always have reliable connectivity.
+
+\subsubsection\textbf{3.3.8 Failure Cases \& Limitations}
+
+Key limitations identified include:
+
+\begin{itemize}
+    \item Recording indicator remains active during bot speech
+    \item Lower accuracy in noisy environments or with poor microphones
+    \item Navigation to specific pages occasionally requires precise phrasing
+    \item Offline Whisper may run slowly on low-end hardware
+\end{itemize}
+
+These findings will guide future improvements, including better frontend event handling, expanded intent recognition, and optimization of the offline pipeline.
 
 %Section 4
 
@@ -247,3 +531,4 @@ platform support and a more advanced wake word system to further enhance
 accessibility and user independence.
 
 \end{document}
+
