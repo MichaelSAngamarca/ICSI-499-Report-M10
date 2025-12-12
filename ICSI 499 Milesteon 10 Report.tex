@@ -72,7 +72,7 @@ The motivation behind Talk Assist was to develop a tool that people with life-al
 \vspace{1cm}
 
 \noindent
-Talk Assist is an artificial intelligent voice assistant designed for individuals with visual disabilities. The project's objective is to create, test, and assess an AI-driven voice assistant that supports visually impaired users in managing daily life. Talk Assist includes two unique modes that allow users to dynamically transition based on Internet connectivity. Users can request online searches, weather, time, date information, and reminders in Online Mode. In Offline Mode, Talk Assist preserves the same weather, time, date, and reminder functionality, while also offering a calculation utility for basic computations. Talk Assist aims to simplify daily tasks for visually impaired users without the need for expensive or inaccessible healthcare technologies.
+Talk Assist is an artificial intelligent voice assistant designed for individuals with visual disabilities. The project's objective is to create, test, and assess an AI driven voice assistant that supports visually impaired users in managing daily life. Talk Assist includes two unique modes that allow users to dynamically transition based on Internet connectivity. Users can request online searches, weather, time, date information, and reminders in Online Mode. In Offline Mode, Talk Assist preserves the same weather, time, date, and reminder functionality, while also offering a calculation utility for basic computations. Talk Assist aims to simplify daily tasks for visually impaired users without the need for expensive or inaccessible healthcare technologies.
 
 % ----------------- PROBLEM ANALYSIS -----------------
 \newpage
@@ -124,7 +124,7 @@ The remainder of this report is structured as follows:
 
 \subsection{Overview}
 
-TalkAssist is designed to support individuals across a broad spectrum of visual impairments. To effectively serve this user group, the system is built around three core requirements: a fully non-visual interface, highly accurate text-to-speech and natural language processing capabilities, and complete hands-free operation through voice interaction. In this section, we provide an overview of our project requirements, describe our system architecture, and walk through the major components of our implementation. We also highlight the core computer science and software engineering principles applied throughout the project including time-complexity considerations, natural language processing techniques, API integration, and system integration techniques.
+TalkAssist is designed to support individuals across a broad spectrum of visual impairments. To effectively serve this user group, the system is built around three core requirements: a fully non-visual interface, highly accurate text-to-speech and natural language processing capabilities, and complete hands-free operation through voice interaction. In this section, we provide an overview of our project requirements, describe our system architecture, and walk through the major components of our implementation. We also highlight the core computer science and software engineering principles applied throughout the project including time complexity considerations, natural language processing techniques, API integration, and system design techniques.
 
 \subsection{Project Requirements}
 
@@ -149,28 +149,81 @@ There are two distinct user classes. Application Users are individuals who inter
 \item\textbf{Scalability:}App should support integration with additional features ( calendars, weather APIs, reminders) without major redesign
 \item\textbf{Portability:}Should scale to run on multiple platforms in future (desktop and mobile) with minimal configuration
 \end{itemize}
+\subsubsection{Operating Requirements}
+In terms of operating reqiurements, Talk Assist only needs a simple laptop with any windows based operating system to run on. Windows gives us the ability to access the users microphone and keyboard input without limitation like in other operating systems. 
+\subsubsection{Design and Implementation Constraint}
+Future developers ought to address a number of design constraints that have hindered conversation assistance. Build limitations on operating systems such as MacOS are one of these issues. As previously stated, MacOS unfortunately prevents the usage of some libraries, including keyboard and microphone access libraries, therefore we can only build for Windows. The dependence on third-party APIs is another problem. We are unable to control rate limitation because we use a lot of free and open source APIs. Certain talk-assist tools, such time and weather information, are prohibited from use while rate restriction takes place because the corresponding API restricts our use for a while. 
+
+\subsection{Solution Architecture}
+Three separate components make up Talk Assist's architecture solution. We are using the Eleven Labs API in its Online Mode, which generates a conversational agent. When our software runs, it calls ElevenLabs and gives the agent the associated ID that we have generated. ElevenLabs enables us to program agent tools, such as weather, time, and reminder tools, which are subsequently called by the agent when necessary. 
+\newpage
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{TalkAssistOnline.png}
+    \caption{
+        TalkAssist system architecture.  
+        Online mode uses the ElevenLabs API for agent communication. What a normal average use case of Talk Assist looks like when running in online mode.
+    }
+    \label{fig:architecture}
+\end{figure}
+
+Lastly, we put the connection based handling method into operation. This method uses built in Python tools to send a lightweight request to a Google.com instance on a regular basis to a known, dependable endpoint. To guarantee dynamic and ongoing network state monitoring, this check is carried out every five seconds.The system verifies that an internet connection is available and automatically enters online mode if a successful response is received. In contrast, the system enters offline mode if the request is unsuccessful, assuming that connectivity has been lost. Throughout the program's execution time, this method enables it to smoothly adjust anytime the network connection is lost or restored, even while the application is running.
+\newpage
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{ConnectionCheck.png}
+    \caption{
+        TalkAssist connection detection architecture is a process that runs on every program operation and doesn't stop until the application ends. essential to the online and offline modes' integration. 
+    }
+    \label{fig:architecture}
+\end{figure}
+
+\subsection{System Implementation}
+To guarantee seamless collaboration and maintainability, our team operated in a single, unified development environment. Visual Studio Code (VSCode), a strong yet lightweight IDE that works well with Python development workflows, was the main tool we used. We set up a specific Python virtual environment for the project in order to maintain dependencies separate and organized. Git was used for version control, enabling the team as a whole to manage branches, keep the main branch secure and current with each commit, and track changes. In addition to the core technologies already discussed such as ElevenLabs and OpenAI Whisper—we incorporated several other important libraries and tools to support more advanced functionality. Some of the most notable include PyAudio, Pyttsx3, APScheduler, and PyInput. These tools played a important role in enabling key system features, especially the offline mode, which required local audio processing and event handling without relying on external too many external APIs.
+
+\subsection{Use of Computer Science Theory and Software Development Fundamentals}
+
+Throughout the development of TalkAssist, our team relied heavily on core software engineering practices and foundational computer science principles to ensure that the system was reliable, maintainable, and capable of supporting both online and offline functionality. The following subsections highlight the major theoretical concepts and development fundamentals used throughout the project.
+
+\subsubsection{Use of Computer Science Theory}
+
+\begin{itemize}
+\item\textbf{Natural Language Processing (NLP)}
+TalkAssist relies on NLP concepts such as intent recognition, keyword extraction, and speech to text tokenization. Even though we used external models such as Whisper, we applied NLP logic internally for example, distinguishing between “times” (multiplication) and “time” (clock queries), or mapping spoken phrases to internal commands.
+\item\textbf{Run Time Complexity Optimization}
+To make sure TalkAssist stayed fast and responsive, we applied basic runtime and time complexity principles during development. For reminders, we kept storage simple by using a small JSON file and only searching through what was necessary, reducing extra file reading. Our wake word detection and internet connection checks were designed to run in constant time so they would not slow down the rest of the program. In offline mode, we used lightweight text[matching methods instead of heavier processing to keep responses quick. These choices helped the system run smoothly and efficiently, even on regular laptops without high processing power.
+\end{itemize}
+
+\subsubsection{Use of Software Development Fundementals}
+\begin{itemize}
+\item\textbf{API Integration and Interface Handling:}  
+Integrating ElevenLabs, Whisper, and weather/time APIs required careful schema handling, error checking, and adherence to rate limits. Clear input/output interfaces were designed so components could interact without exposing internal implementation details.
+\item\textbf{System Design}
+TalkAssist was divided into functional components, including the GUI, connection monitoring subsystem, reminders, text to speech, speech recognition, and API handlers. It makes debugging easier, decreased overlap in work, and let team members assume responsibility for particular parts.
+\end{itemize}
+
 
 %Section 3
+\newpage
+\section{Experimental Design and Testing}
 
-\section\textbf{Experimental Design and Testing}
+This section presents the experimental methodology used to evaluate TalkAssist across its online mode, offline mode, voice driven functionality, and graphical user interface (GUI) components. The goal of these experiments is twofold: \textbf{verification} – confirming that TalkAssist’s implemented features behave correctly – and \textbf{validation} – determining whether the system adequately addresses the needs of visually impaired users who rely on fully voice operated systems. Tests were conducted by multiple team members, each focusing on different subsystems: online speech recognition reliability, offline speech to text and reminder management, mathematical query handling, and frontend accessibility. Collectively, these experiments provided a comprehensive assessment of TalkAssist’s usability, accuracy, and robustness in realistic user conditions.
 
-This section presents the experimental methodology used to evaluate TalkAssist across its online mode, offline mode, voice-driven functionality, and graphical user interface (GUI) components. The goal of these experiments is twofold: \textbf{verification} – confirming that TalkAssist’s implemented features behave correctly – and \textbf{validation} – determining whether the system adequately addresses the needs of visually impaired users who rely on fully voice-operated systems. Tests were conducted by multiple team members, each focusing on different subsystems: online speech recognition reliability, offline speech-to-text and reminder management, mathematical query handling, and frontend accessibility. Collectively, these experiments provided a comprehensive assessment of TalkAssist’s usability, accuracy, and robustness in realistic user conditions.
 
-\subsection\textbf{3.1 Experimental Setup}
 
 We designed five experiments, numbered by subsystem:
 
 \begin{enumerate}
-    \item Online Voice-Only Navigation Test
+    \item Online Voice Only Navigation Test
     \item Online Speech Recognition Across Recording Environments
     \item Accuracy of Mathematical Query Parsing
     \item Offline Speech Recognition and Offline Reminder Management
-    \item Frontend Recording-Indicator Behavior (GUI Test)
+    \item Frontend Recording Indicator Behavior (GUI Test)
 \end{enumerate}
 
-Each experiment was conducted to target different risk areas, including voice accuracy, robustness under noise, correct command interpretation, deterministic behavior offline, and the accessibility of the user interface for non-visual users. Because TalkAssist is intended for visually impaired users, tests emphasized hands-free usage, speech-only interaction, and clarity of system feedback.
+Each experiment was conducted to target different risk areas, including voice accuracy, robustness under noise, correct command interpretation, deterministic behavior offline, and the accessibility of the user interface for non visual users. Because TalkAssist is intended for visually impaired users, tests emphasized hands free usage, speech only interaction, and clarity of system feedback.
 
-\subsubsection\textbf{3.1.1 Experiment 1: Online Voice-Only Navigation Test}
+\subsubsection{Experiment 1: Online Voice Only Navigation Test}
 
 \textbf{Objective:} To determine whether TalkAssist’s online version can be fully navigated without visual access to the GUI.
 
@@ -179,13 +232,13 @@ Each experiment was conducted to target different risk areas, including voice ac
 \textbf{Environment \& Tools:}
 \begin{itemize}
     \item Chrome browser running TalkAssist web interface
-    \item Built-in laptop microphone
+    \item Built in laptop microphone
     \item No keyboard or mouse input permitted
 \end{itemize}
 
-\textbf{Purpose:} To validate whether TalkAssist meets its accessibility goal: functioning as a screen-reader-free, voice-only assistant.
+\textbf{Purpose:} To validate whether TalkAssist meets its accessibility goal: functioning as a screen reader free, voice only assistant.
 
-\subsubsection\textbf{3.1.2 Experiment 2: Online Speech Recognition Across Varying Recording Environments}
+\subsubsection{Experiment 2: Online Speech Recognition Across Varying Recording Environments}
 
 \textbf{Objective:} To test the reliability of online speech recognition under changes in microphone quality and ambient noise.
 
@@ -193,37 +246,36 @@ Each experiment was conducted to target different risk areas, including voice ac
 
 \begin{itemize}
     \item Quiet bedroom
-    \item Medium-noise room (TV and conversation noise)
+    \item Medium noise room (TV and conversation noise)
     \item Crowded living room
 \end{itemize}
 
-Additionally, multiple microphones were used (laptop mic vs. USB headset).
+Multiple microphones were evaluated, including laptop microphones and USB headsets.
 
-\textbf{Purpose:} To determine if TalkAssist maintains voice recognition accuracy across common, real-world usage environments, as many visually impaired users rely on built-in laptop hardware that varies widely in quality.
+\textbf{Purpose:} To determine if TalkAssist maintains voice recognition accuracy across common, real world usage environments.
 
-\subsubsection\textbf{3.1.3 Experiment 3: Mathematical Query Parsing}
+\subsubsection{Experiment 3: Mathematical Query Parsing}
 
 \textbf{Objective:} To test the chatbot’s ability to correctly handle mathematical computations using natural language.
 
 \textbf{Setup:} A series of spoken math prompts were used, including:
 
 \begin{itemize}
-    \item Trigger-word-based commands: “What is 5 plus 7?”
-    \item Multi-phrase queries: “Calculate the sum of 5 and 4.”
-    \item Ambiguous phrases involving “times” to ensure the bot distinguishes multiplication from time queries.
+    \item “What is 5 plus 7?”
+    \item “Calculate the sum of 5 and 4.”
+    \item Phrases containing “times” to test disambiguation from time queries
 \end{itemize}
 
 \textbf{Purpose:} To validate the correctness of the math parser and ensure disambiguation logic prevents false triggers.
 
-\subsubsection\textbf{3.1.4 Experiment 4: Offline Speech Recognition \& Reminder Management}
+\subsubsection{Experiment 4: Offline Speech Recognition and Reminder Management}
 
-\textbf{Objective:} To evaluate TalkAssist’s offline functionality, which is critical for accessibility in situations where internet access is unavailable.
+\textbf{Objective:} To evaluate TalkAssist’s offline functionality, which is critical when internet access is unavailable.
 
 \textbf{Setup:}
 
-\textbf{Hardware:} Windows 11 laptop, USB microphone
-
-\textbf{Software:} Whisper base model (70M parameters) running locally, Python 3.10 virtual environment
+\textbf{Hardware:} Windows 11 laptop with USB microphone  
+\textbf{Software:} Whisper base model (70M parameters), Python 3.10 virtual environment  
 
 \textbf{Environments:}
 \begin{itemize}
@@ -231,209 +283,56 @@ Additionally, multiple microphones were used (laptop mic vs. USB headset).
     \item Medium background noise (open window, distant voices)
 \end{itemize}
 
-Offline module tests included:
-
+Tests included:
 \begin{itemize}
-    \item Speech-to-text accuracy
+    \item Speech to text accuracy
     \item Local reminder creation, storage, and retrieval using \texttt{reminders.json}
     \item Offline text-to-speech playback
 \end{itemize}
 
-\textbf{Purpose:} To ensure the assistant remains usable in scenarios with poor connectivity: highly relevant to low-vision users in unpredictable environments.
+\textbf{Purpose:} To ensure the assistant remains usable when connectivity is poor or unavailable.
 
-\subsubsection\textbf{3.1.5 Experiment 5: GUI Recording-Indicator Behavior}
+\subsubsection{Experiment 5: GUI Recording-Indicator Behavior}
 
-\textbf{Objective:} To test whether the TalkAssist interface correctly indicates when the system is actively listening for user input. This behavior is important for accessibility because visually impaired users rely on consistent feedback to understand when it is their turn to speak.
+\textbf{Objective:} To test whether the TalkAssist interface correctly indicates when the system is actively listening for user speech.
 
-\textbf{Setup:} The tester interacted with TalkAssist using standard voice commands and manually observed the single available frontend indicator:
+\textbf{Setup:} The tester issued voice commands while visually monitoring the recording indicator, which should activate only during input capture.
 
-\begin{itemize}
-    \item The recording indicator, which is designed to appear only when user audio input is being captured.
-\end{itemize}
+\textbf{Purpose:} To determine whether the indicator switches states correctly and provides reliable feedback.
 
-\textbf{Purpose:} To determine whether the recording indicator switches states properly during typical voice interactions and whether it provides reliable feedback to users who depend on nonvisual cues.
+\textbf{Observed Issue:} The bot continues listening during its own speech, causing the indicator to remain active. This experiment helped isolate whether the issue came from frontend timing, Web Speech API delays, or backend latency.
 
-\textbf{Known issue uncovered:} The bot continues listening during its own speech, causing the recording indicator to remain active incorrectly. This experiment helped isolate whether the issue originated from frontend logic, asynchronous Web Speech API behavior, or backend latency.
+\subsection{Dataset}
 
-\subsection\textbf{3.2 Dataset}
+Because TalkAssist relies heavily on natural language input, each experiment generated a dataset of spoken commands and system outputs.
 
-Because TalkAssist relies heavily on natural language input, each experiment generated a dataset of spoken commands and system outputs. The datasets are described below per experiment.
-
-\subsubsection*\textbf{Dataset for Experiments 1 \& 2 (Online Mode)}
+\subsubsection*{Dataset for Experiments 1 \& 2 (Online Mode)}
 
 \begin{itemize}
     \item 2 internal testers simulating visually impaired usage
-    \item $\sim$60 navigation and Q\&A voice commands
+    \item $\sim$60 navigation and Q\&A commands
     \item 40 environmental speech samples across three noise levels
-    \item Microphone variability tests across 2 devices
+    \item Tests across 2 microphone types
 \end{itemize}
 
-Data included:
+Each dataset included:
 \begin{itemize}
     \item STT transcriptions
     \item Intent parser outputs
-    \item Success/failure flags for navigation tasks
+    \item Success/failure indicators
 \end{itemize}
 
-\subsubsection*\textbf{Dataset for Experiment 3 (Math Parsing)}
+\subsubsection*{Dataset for Experiment 3 (Math Parsing)}
 
 \begin{itemize}
     \item 25 spoken mathematical expressions
-    \item Mix of operator-based and phrase-based queries
-    \item Misinterpretation cases logged for debugging
+    \item Operator-based and phrase based queries
+    \item Misinterpretation cases logged
 \end{itemize}
 
-\subsubsection*\textbf{Dataset for Experiment 4 (Offline Mode)}
 
-\begin{itemize}
-    \item 110 spoken test phrases
-    \item Whisper accuracy logs
-    \item \texttt{reminders.json} operations (creation, deletion, listing)
-\end{itemize}
+The combined datasets provide coverage for accuracy, robustness, and user experience evaluation across TalkAssist’s full set of features.
 
-\subsubsection*\textbf{Dataset for Experiment 5 (GUI Test)}
-
-Collected via frontend logging:
-
-\begin{itemize}
-    \item 30 turn-taking sequences
-    \item 30 observation logs of indicator behavior
-    \item Timestamps of listening vs. speaking phases
-\end{itemize}
-
-\subsection\textbf{3.3 Results and Analysis}
-
-\subsubsection\textbf{3.3.1 Experiment 1 Results: Online Voice-Only Navigation}
-
-Users were able to navigate most features without visual assistance. Event-level tasks (time queries, general questions, reminder queries) succeeded consistently.
-
-\textbf{Failure point:} accessing the reminders page required too strict phrasing and occasionally misrouted the user.
-
-This indicates a need for broader intent recognition or additional aliases for “open reminders.”
-
-\subsubsection\textbf{3.3.2 Experiment 2 Results: Voice Recognition Across Environments}
-
-TalkAssist functioned reliably in quiet and medium-noise environments. When used with a poor-quality laptop microphone:
-
-\begin{itemize}
-    \item Misrecognitions increased
-    \item Reminder texts occasionally stored incorrect words
-    \item Long commands were more error-prone
-\end{itemize}
-
-This matches expected patterns in consumer STT systems: microphone quality is the primary determinant of accuracy.
-
-\subsubsection\textbf{3.3.3 Experiment 3 Results: Mathematical Query Parsing}
-
-All math expressions produced correct results. The implemented rule to disambiguate:
-
-\begin{itemize}
-    \item “times = multiplication”
-    \item “time = current time request”
-\end{itemize}
-
-worked as intended, preventing false time-query activations.
-
-This confirms the math parser’s dependability and robustness to ambiguous phrasing.
-
-\subsubsection\textbf{3.3.4 Experiment 4 Results: Offline Whisper STT \& Reminder System}
-
-\textbf{Whisper Offline Accuracy}
-
-\begin{table}[h]
-\centering
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Test Phrases} & \textbf{Correct} & \textbf{Accuracy} \\
-\hline
-110 & 88 & 80\% \\
-\hline
-\end{tabular}
-\caption{Offline Whisper STT accuracy results}
-\end{table}
-
-Whisper performed slightly worse than online STT but remained usable for reminders and date/time queries. Whisper’s deterministic behavior significantly improved reliability for structured tasks such as reminders.
-
-\textbf{Reminder System}
-
-\begin{table}[h]
-\centering
-\begin{tabular}{|c|c|}
-\hline
-\textbf{Task} & \textbf{Success Rate} \\
-\hline
-Set Reminder & 100\% \\
-List Reminders & 100\% \\
-\hline
-\end{tabular}
-\caption{Offline reminder system performance}
-\end{table}
-
-Offline mode proved highly stable because it avoids ambiguity and latency associated with large online models.
-
-\subsubsection\textbf{3.3.5 Experiment 5 Results: GUI Indicator Test}
-
-Results were summarized in the following table:
-
-\begin{table}[h]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Test Case} & \textbf{Expected Behavior} & \textbf{Observed Behavior} & \textbf{Success} \\
-\hline
-Bot Speaking & Indicator OFF & Indicator remained ON & No \\
-Bot finished speaking & Indicator ON & Correct & Yes \\
-Rapid turn-taking & Indicator alternated correctly & Sometimes lagged & Somewhat \\
-Long bot responses & Indicator OFF & Indicator ON entire duration & No \\
-\hline
-\end{tabular}
-\caption{GUI indicator test results}
-\end{table}
-
-Analysis: The issue stems from the online SpeechRecognition API continuously streaming even during bot speech. Because TalkAssist is voice-driven, this causes confusion for a visually impaired user who cannot rely on visual timing cues.
-
-\subsubsection\textbf{3.3.6 Expected and Unexpected Findings}
-
-\textbf{Expected:}
-\begin{itemize}
-    \item Whisper offline performs slightly worse than online STT
-    \item Math parser reliably handles structured phrases
-    \item Online navigation works well in quiet environments
-\end{itemize}
-
-\textbf{Unexpected:}
-\begin{itemize}
-    \item Offline reminders were more reliable than online reminders
-    \item GUI indicator issue was persistent across all tests
-    \item Microphone quality had a greater impact than anticipated
-\end{itemize}
-
-\subsubsection\textbf{3.3.7 Remarkable Findings}
-
-The most notable positive finding was the robustness of offline reminder functionality.
-
-Unlike online mode, offline mode has:
-
-\begin{itemize}
-    \item No LLM-based ambiguity
-    \item Deterministic parsing
-    \item Zero network latency
-\end{itemize}
-
-As a result, offline mode became the most stable subsystem, which is valuable for visually impaired users who may not always have reliable connectivity.
-
-\subsubsection\textbf{3.3.8 Failure Cases \& Limitations}
-
-Key limitations identified include:
-
-\begin{itemize}
-    \item Recording indicator remains active during bot speech
-    \item Lower accuracy in noisy environments or with poor microphones
-    \item Navigation to specific pages occasionally requires precise phrasing
-    \item Offline Whisper may run slowly on low-end hardware
-\end{itemize}
-
-These findings will guide future improvements, including better frontend event handling, expanded intent recognition, and optimization of the offline pipeline.
 
 %Section 4
 
@@ -443,8 +342,8 @@ These findings will guide future improvements, including better frontend event h
 \subsection*{4.1 \quad Legal Considerations}
 \addcontentsline{toc}{subsection}{4.1 Legal Considerations}
 
-\textbf{Use of Third-Party Libraries:}
-Only speech-to-text, text-to-speech, and API tools with proper open-source or permissive licenses (MIT, Apache, etc.) were used to avoid copyright or IP violations.
+\textbf{Use of Third Party Libraries:}
+Only speech to text, text to speech, and API tools with proper open source or permissive licenses (MIT, Apache, etc.) were used to avoid copyright or IP violations.
 
 \textbf{Reminder Data Storage:}
 \begin{itemize}
@@ -454,13 +353,13 @@ Only speech-to-text, text-to-speech, and API tools with proper open-source or pe
 \end{itemize}
 
 \textbf{Privacy and Data Protection:}
-Local-only storage reduces risks related to major data-protection laws (GDPR, state privacy laws). Users are informed that reminder text is stored to ensure transparency.
+Local only storage reduces risks related to major data protection laws (GDPR, state privacy laws). Users are informed that reminder text is stored to ensure transparency.
 
 \textbf{Online Service Compliance:}
 When TalkAssist uses online features (e.g., weather, general information), the system abides by the terms and usage limits of each external API.
 
 \textbf{Liability Reduction:}
-Clear limitations are placed on high-risk tasks, and the assistant avoids giving medical, legal, or dangerous instructions.
+Clear limitations are placed on high  risk tasks, and the assistant avoids giving medical, legal, or dangerous instructions.
 
 \vspace{1em}
 
@@ -491,29 +390,34 @@ Every feature is designed to enhance independence, clarity, and accessibility fo
 
 %Section 5
 \section*{5 \quad Effort Sharing}
+Tasks that were completed together include sponsor meetings over zoom and in person as well as communication within the team GroupMe in order to manage everyones task and completion of said tasks. Below you can find a table and explanation of each persons contribution percentage and explanation
 
+\begin{itemize}
+\item\textbf{Michael Angamarca (Team Leader):}
+Worked on all online features, with the exception of reminders. Also finished integrating online and offline modes with the front-end, helped redesign the frontend GUI, and finished integrating connection with the online and offline modes. Coordinated all team responsibilities by milestone deadlines and assisting to write Talk Assist documentation (M10 Doc, Slideshows, etc.) 
+\item\textbf{Kyle Batchelor: }
+Primarily worked on the offline mode. In particular, finishing the offline mode computation functionality. Collaborated with other members to finish a portion of the offline functionality. Helped finish the Talk Assist documentation (M10 Doc, Slideshow, and Milestone Videos).
+\item\textbf{Isaac Mardy: }
+Mostly focused on the offline mode. Nearly all offline functions were completed, and the online mode's reminders functionality was also completed. Worked with other members to integrate the back end to the GUI and the online mode to the offline mode.  Helped finish the Talk Assist documentation (Milestone Videos, Slideshow, M10 Doc).
+\item\textbf{Ayan Cooper: }
+Primarily worked on creating a GUI for Talk Assist. Soley has created the initial draft of the GUI and contributed to its second iteration and implementation. Collaborated with others to integrate both the front and back ends. Helped finish the Talk Assist documentation (M10 Doc, Slideshows, and Milestone Videos).
+\end{itemize}
 \begin{table}[h!]
 \centering
-\caption{Effort sharing}
-\scriptsize                     % smaller font for this table
-\setlength{\tabcolsep}{3pt}     % reduce horizontal padding
+\caption{Effort Sharing Among Team 5 Members}
+\small
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-\textbf{Team size} &
-\textbf{Joint efforts} &
-\textbf{Michael Angamarca} &
-\textbf{Isaac Jean Gardy Mardy} &
-\textbf{Ayan Cooper} &
-\textbf{Kyle Batchelor} \\
+\textbf{Team Size} & \textbf{Joint Efforts} & \textbf{Michael Angamarca} & \textbf{Kyle Batchelor} & \textbf{Isaac Mardy} & \textbf{Ayan Cooper} \\
 \hline
-4 & J (30\%) & I (17.5\%) & I (17.5\%) & I (17.5\%) & I (17.5\%) \\
+4 & J (20\%) & I (22\%) & I (15.5\%) & I (22.5\%) & I (20\%) \\
 \hline
 \end{tabular}
 
 \vspace{2mm}
 \footnotesize
-J = description of tasks jointly performed \\
-I = description of tasks individually performed
+J = description of tasks jointly performed (sponsor meetings, team communication, coordination, and documentation) \\
+I = description of tasks individually performed (see bullet points above)
 \end{table}
 
 %Section 6
@@ -531,4 +435,3 @@ platform support and a more advanced wake word system to further enhance
 accessibility and user independence.
 
 \end{document}
-
