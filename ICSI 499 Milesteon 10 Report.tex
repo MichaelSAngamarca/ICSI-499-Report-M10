@@ -19,13 +19,19 @@
     {\Huge \textbf{TalkAssist} \par}
     \vspace{2cm}
 
+ {\large \textit{Michael Angamarca} \par}
+ {\large \textit{Kyle Batchelor} \par}
+
+ {\large \textit{Ayan Cooper} \par}
+ {\large \textit{Isaac Jean Gardy Mardy} \par}
+    \vspace{0.3cm}
     {\large \textit{Team 5} \par}
-    \vspace{0.5cm}
+ \vspace{0.3cm}
 
     College of Nanotechnology, Science, and Engineering \\
     University at Albany, SUNY
 
-    \vspace{3cm}
+    \vspace{2cm}
 
     {\large \textit{Project Sponsor:} \par}
     \vspace{0.5cm}
@@ -41,6 +47,7 @@
 
     {\large \today}
 \end{titlepage}
+
 
 % ----------------- FRONT MATTER -----------------
 \pagenumbering{roman}
@@ -62,6 +69,7 @@ Team 5 would like to extend our heartfelt appreciation to Professor Pradeep Atre
 \noindent
 The motivation behind Talk Assist was to develop a tool that people with life-altering visual disabilities might utilize to live their lives on an equal footing with people without them. We aim to sustain this purpose and produce a product that satisfies these great expectations placed upon us by our sponsors and the University at Albany.
 
+
 % ----------------- ABSTRACT -----------------
 \newpage
 \thispagestyle{plain}
@@ -73,6 +81,12 @@ The motivation behind Talk Assist was to develop a tool that people with life-al
 
 \noindent
 Talk Assist is an artificial intelligent voice assistant designed for individuals with visual disabilities. The project's objective is to create, test, and assess an AI driven voice assistant that supports visually impaired users in managing daily life. Talk Assist includes two unique modes that allow users to dynamically transition based on Internet connectivity. Users can request online searches, weather, time, date information, and reminders in Online Mode. In Offline Mode, Talk Assist preserves the same weather, time, date, and reminder functionality, while also offering a calculation utility for basic computations. Talk Assist aims to simplify daily tasks for visually impaired users without the need for expensive or inaccessible healthcare technologies.
+
+\newpage
+\thispagestyle{plain}
+\tableofcontents
+\newpage
+
 
 % ----------------- PROBLEM ANALYSIS -----------------
 \newpage
@@ -167,17 +181,6 @@ Three separate components make up Talk Assist's architecture solution. We are us
     \label{fig:architecture}
 \end{figure}
 
-Lastly, we put the connection based handling method into operation. This method uses built in Python tools to send a lightweight request to a Google.com instance on a regular basis to a known, dependable endpoint. To guarantee dynamic and ongoing network state monitoring, this check is carried out every five seconds.The system verifies that an internet connection is available and automatically enters online mode if a successful response is received. In contrast, the system enters offline mode if the request is unsuccessful, assuming that connectivity has been lost. Throughout the program's execution time, this method enables it to smoothly adjust anytime the network connection is lost or restored, even while the application is running.
-\newpage
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.9\textwidth]{ConnectionCheck.png}
-    \caption{
-        TalkAssist connection detection architecture is a process that runs on every program operation and doesn't stop until the application ends. essential to the online and offline modes' integration. 
-    }
-    \label{fig:architecture}
-\end{figure}
-
 Offline mode in TalkAssist ensures accessibility when internet connectivity is unavailable.
 The system continuously checks network availability and automatically switches to offline
 mode upon failure, returning to online mode once connectivity is restored. In offline mode,
@@ -189,6 +192,17 @@ reliability.
 \centering
 \includegraphics[width=0.95\textwidth]{TalkAssist_DFD.png}
 \caption{Level-1 Data Flow Diagram for TalkAssist}
+\end{figure}
+
+\newpage
+Lastly, we put the connection based handling method into operation. This method uses built in Python tools to send a lightweight request to a Google.com instance on a regular basis to a known, dependable endpoint. To guarantee dynamic and ongoing network state monitoring, this check is carried out every five seconds.The system verifies that an internet connection is available and automatically enters online mode if a successful response is received. In contrast, the system enters offline mode if the request is unsuccessful, assuming that connectivity has been lost. Throughout the program's execution time, this method enables it to smoothly adjust anytime the network connection is lost or restored, even while the application is running.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{ConnectionCheck.png}
+    \caption{
+        TalkAssist connection detection architecture is a process that runs on every program operation and doesn't stop until the application ends. essential to the online and offline modes' integration. 
+    }
+    \label{fig:architecture}
 \end{figure}
 
 \subsection{System Implementation}
@@ -215,9 +229,6 @@ Integrating ElevenLabs, Whisper, and weather/time APIs required careful schema h
 TalkAssist was divided into functional components, including the GUI, connection monitoring subsystem, reminders, text to speech, speech recognition, and API handlers. It makes debugging easier, decreased overlap in work, and let team members assume responsibility for particular parts.
 \end{itemize}
 
-
-%Section 3
-\newpage
 \section{Experimental Design and Testing}
 
 This section presents the experimental methodology used to evaluate TalkAssist across its online mode, offline mode, voice driven functionality, and graphical user interface (GUI) components. The goal of these experiments is twofold: \textbf{verification} – confirming that TalkAssist’s implemented features behave correctly – and \textbf{validation} – determining whether the system adequately addresses the needs of visually impaired users who rely on fully voice operated systems. Tests were conducted by multiple team members, each focusing on different subsystems: online speech recognition reliability, offline speech to text and reminder management, mathematical query handling, and frontend accessibility. Collectively, these experiments provided a comprehensive assessment of TalkAssist’s usability, accuracy, and robustness in realistic user conditions.
@@ -419,6 +430,7 @@ Every feature is designed to enhance independence, clarity, and accessibility fo
 
 %Section 5
 \section*{5 \quad Effort Sharing}
+\addcontentsline{toc}{section}{5 Effort Sharing}
 Tasks that were completed together include sponsor meetings over zoom and in person as well as communication within the team GroupMe in order to manage everyones task and completion of said tasks. Below you can find a table and explanation of each persons contribution percentage and explanation
 
 \begin{itemize}
@@ -463,6 +475,7 @@ I = description of tasks individually performed (see bullet points above)
 
 %Section 6
 \section*{6 \quad Conclusion and Future Work}
+\addcontentsline{toc}{section}{6 Conclusion and Future Work}
 
 The development of TalkAssist allowed us to design and implement an accessible
 voice driven assistant that supports both online and offline functionality for
