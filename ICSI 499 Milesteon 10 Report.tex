@@ -178,12 +178,13 @@ Lastly, we put the connection based handling method into operation. This method 
     \label{fig:architecture}
 \end{figure}
 
-\subsection{Offline Mode Implementation}
-Offline mode in TalkAssist is designed to ensure continuous accessibility when internet connectivity is unavailable. The system continuously monitors network availability using a lightweight connection check to a reliable external endpoint. If the connection fails, TalkAssist automatically transitions into offline mode without requiring user intervention. When connectivity is restored, the system seamlessly switches back to online mode while the application remains running.
-
-In offline mode, all processing is performed locally on the user's device. Speech to text is handled using a locally deployed whisper model, while text to speech output is generated using offline capable libraries such as pyttsx3. Core functionalities including time and date queries, reminder creation and retrieval, and basic mathematical computations remain fully available. Reminders are stored locally in a JSON file to preserve functionality without cloud dependency.
-
-This design prioritizes reliability, privacy and user independence, allowing visually impaired users to interact with TalkAssist confidently in environments with limited or no internet access.
+Offline mode in TalkAssist ensures accessibility when internet connectivity is unavailable.
+The system continuously checks network availability and automatically switches to offline
+mode upon failure, returning to online mode once connectivity is restored. In offline mode,
+all processing occurs locally using a Whisper speech to text model and offline text to speech
+libraries such as pyttsx3. Core features including time and date queries, reminders, and basic
+calculations remain available, with reminders stored locally to preserve privacy and
+reliability.
 
 \subsection{System Implementation}
 To guarantee seamless collaboration and maintainability, our team operated in a single, unified development environment. Visual Studio Code (VSCode), a strong yet lightweight IDE that works well with Python development workflows, was the main tool we used. We set up a specific Python virtual environment for the project in order to maintain dependencies separate and organized. Git was used for version control, enabling the team as a whole to manage branches, keep the main branch secure and current with each commit, and track changes. In addition to the core technologies already discussed such as ElevenLabs and OpenAI Whisper—we incorporated several other important libraries and tools to support more advanced functionality. Some of the most notable include PyAudio, Pyttsx3, APScheduler, and PyInput. These tools played a important role in enabling key system features, especially the offline mode, which required local audio processing and event handling without relying on external too many external APIs.
