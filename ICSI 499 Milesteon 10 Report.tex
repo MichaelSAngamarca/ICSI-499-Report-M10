@@ -185,6 +185,11 @@ all processing occurs locally using a Whisper speech to text model and offline t
 libraries such as pyttsx3. Core features including time and date queries, reminders, and basic
 calculations remain available, with reminders stored locally to preserve privacy and
 reliability.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{TalkAssist_DFD.png}
+\caption{Level-1 Data Flow Diagram for TalkAssist}
+\end{figure}
 
 \subsection{System Implementation}
 To guarantee seamless collaboration and maintainability, our team operated in a single, unified development environment. Visual Studio Code (VSCode), a strong yet lightweight IDE that works well with Python development workflows, was the main tool we used. We set up a specific Python virtual environment for the project in order to maintain dependencies separate and organized. Git was used for version control, enabling the team as a whole to manage branches, keep the main branch secure and current with each commit, and track changes. In addition to the core technologies already discussed such as ElevenLabs and OpenAI Whisper—we incorporated several other important libraries and tools to support more advanced functionality. Some of the most notable include PyAudio, Pyttsx3, APScheduler, and PyInput. These tools played a important role in enabling key system features, especially the offline mode, which required local audio processing and event handling without relying on external too many external APIs.
@@ -421,8 +426,13 @@ Tasks that were completed together include sponsor meetings over zoom and in per
 Worked on all online features, with the exception of reminders. Also finished integrating online and offline modes with the front-end, helped redesign the frontend GUI, and finished integrating connection with the online and offline modes. Coordinated all team responsibilities by milestone deadlines and assisting to write Talk Assist documentation (M10 Doc, Slideshows, etc.) 
 \item\textbf{Kyle Batchelor: }
 Primarily worked on the offline mode. In particular, finishing the offline mode computation functionality. Collaborated with other members to finish a portion of the offline functionality. Helped finish the Talk Assist documentation (M10 Doc, Slideshow, and Milestone Videos).
-\item\textbf{Isaac Jean Gardy Mardy: }
-Mostly focused on the offline mode. Nearly all offline functions were completed, and the online mode's reminders functionality was also completed. Worked with other members to integrate the back end to the GUI and the online mode to the offline mode.  Helped finish the Talk Assist documentation (Milestone Videos, Slideshow, M10 Doc).
+\item \textbf{Isaac Jean Gardy Mardy:}
+Primarily focused on the implementation of offline mode. Completed nearly all offline
+functionality and also contributed to the development of the online mode's reminder
+features. Collaborated with other team members to integrate the backend with the GUI
+and ensure seamless transitions between online and offline modes. Assisted in completing
+TalkAssist documentation (M10 Doc, Slideshows, and Milestone Videos).
+report.
 \item\textbf{Ayan Cooper: }
 Primarily worked on creating a GUI for Talk Assist. Soley has created the initial draft of the GUI and contributed to its second iteration and implementation. Collaborated with others to integrate both the front and back ends. Helped finish the Talk Assist documentation (M10 Doc, Slideshows, and Milestone Videos).
 \end{itemize}
