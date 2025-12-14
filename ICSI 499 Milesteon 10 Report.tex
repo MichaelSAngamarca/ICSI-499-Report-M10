@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{float}
+\usepackage{url}
 
 \begin{document}
 
@@ -527,20 +528,20 @@ Key limitations identified include:
 \textbf{Use of Third Party Libraries:}
 Only speech to text, text to speech, and API tools with proper open source or permissive licenses (MIT, Apache, etc.) were used to avoid copyright or IP violations.
 
-\textbf{Reminder Data Storage:}
+\noindent\textbf{Reminder Data Storage:}
 \begin{itemize}
     \item TalkAssist does not store voice recordings.
     \item It does save reminder text (e.g., ``Take medication at 3 PM'') in a local JSON file.
     \item Because this information may be personal or sensitive, all stored data remains on the user's device.
 \end{itemize}
 
-\textbf{Privacy and Data Protection:}
+\noindent\textbf{Privacy and Data Protection:}
 Local only storage reduces risks related to major data protection laws (GDPR, state privacy laws). Users are informed that reminder text is stored to ensure transparency.
 
-\textbf{Online Service Compliance:}
+\noindent\textbf{Online Service Compliance:}
 When TalkAssist uses online features (e.g., weather, general information), the system abides by the terms and usage limits of each external API.
 
-\textbf{Third-Party API Privacy Concerns (e.g., ElevenLabs):}
+\noindent\textbf{Third-Party API Privacy Concerns (e.g., ElevenLabs):}
 \begin{itemize}
     \item ElevenLabs stores all audio sent through its API, including user conversations and generated speech.
     \item The service retains transcription logs and audio logs, meaning TalkAssist cannot fully control or delete user data once it is sent.
@@ -559,14 +560,14 @@ Clear limitations are placed on high  risk tasks, and the assistant avoids givin
 \textbf{Protection of Vulnerable Users:}
 Designed for individuals with visual impairments, the system avoids misleading, unsafe, or unclear responses.
 
-\textbf{Privacy \& User Consent:}
+\noindent\textbf{Privacy \& User Consent:}
 \begin{itemize}
     \item Reminders may contain private routines or sensitive tasks.
     \item Users are informed that reminders are stored locally and may delete them at any time.
     \item No hidden data collection or cloud storage is used.
 \end{itemize}
 
-\textbf{Third-Party API Privacy Concerns (e.g., ElevenLabs):}
+\noindent\textbf{Third-Party API Privacy Concerns (e.g., ElevenLabs):}
 \begin{itemize}
     \item ElevenLabs stores all audio sent through its API, including user conversations and generated speech.
     \item The service retains transcription logs and audio logs, meaning TalkAssist cannot fully control or delete user data once it is sent.
@@ -574,16 +575,16 @@ Designed for individuals with visual impairments, the system avoids misleading, 
     \item Users should always be informed whenever an external API provider stores or processes their data.
 \end{itemize}
 
-\textbf{Data Minimization:}
+\noindent\textbf{Data Minimization:}
 Only essential reminder information is saved—nothing more.
 
-\textbf{User Autonomy \& Control:}
+\noindent\textbf{User Autonomy \& Control:}
 Users can freely create, edit, or remove reminders; the assistant never makes decisions without explicit instruction.
 
-\textbf{Transparency of Modes:}
+\noindent\textbf{Transparency of Modes:}
 The bot clearly distinguishes between offline processing (fully private) and online processing (which may contact external APIs).
 
-\textbf{Inclusivity and Accessibility:}
+\noindent\textbf{Inclusivity and Accessibility:}
 Every feature is designed to enhance independence, clarity, and accessibility for visually impaired users.
 
 %Section 5
@@ -640,9 +641,54 @@ I = description of tasks individually performed (see bullet points above)
 
 \noindent Online mode, while enabling access to external services, introduces challenges such as network dependency, latency, and synchronization issues when switching between modes. Future work will focus on improving online reliability through better state management, smoother mode transitions, and enhanced error handling. Additional improvements may include expanded offline language understanding, integration of online services, and more advanced wake word detection to further enhance accessibility and user independence.
 
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{7 References}
+
+\begin{thebibliography}{99}
+\raggedright
+
+\bibitem{skypage}
+Skypage. \textit{The Evolution of AI Voice Assistants: Usage Patterns and Adoption Trends in North America}. 2025.  
+https://skywork.ai/skypage/en/The-Evolution-of-AI-Voice-Assistants:-Usage-Patterns-and-Adoption-Trends-in-North-America/1950063575851700224
+
+\bibitem{un}
+United Nations. \textit{Building an Accessible Future for All: AI and the Inclusion of Persons with Disabilities}. Feb. 14, 2024.  
+https://unric.org/en/building-an-accessible-future-for-all-ai-and-the-inclusion-of-persons-with-disabilities/
+
+\bibitem{alexa}
+Amazon. \textit{Amazon Alexa Accessibility Features}.  
+https://www.amazon.com/gp/help/customer/display.html?nodeId=G200127470
+
+\bibitem{nvda}
+NV Access. \textit{About NVDA}. September 9, 2025.  
+https://www.nvaccess.org/about-nvda/
+
+\bibitem{seeingai}
+Lewis, V. \textit{How I Use Microsoft Seeing AI with Low Vision}. Perkins, July 2025.  
+https://www.perkins.org/resource/microsoft-seeing-ai-and-low-vision-review/
+
+\bibitem{elevenlabs}
+ElevenLabs. \textit{Introducing ElevenLabs Agents}. 2025.  
+https://elevenlabs.io/blog/introducing-elevenlabs-agents
+
+\bibitem{ablr}
+Angeles, Maria. \textit{The Pros and Pitfalls of AI for People Who Are Blind or Low Vision}.  
+Ablr, June 23, 2025.  
+https://ablr360.com/the-pros-and-pitfalls-of-ai-for-people-who-are-blind-or-low-vision/
+
+\bibitem{techrxiv}
+TechRxiv. \textit{Analysis of AI-Driven Digital Accessibility for the Visually Impaired Through Non-Visual Modalities}. 2025.  
+https://www.techrxiv.org/users/839525/articles/1237247-analysis-of-ai-driven-digital-accessibility-for-the-visually-impaired-through-non-visual-modalities-challenges-and-prospects
+
+\bibitem{qualimero}
+Qualimero. \textit{Importance, Challenges, and AI Solutions of Digital Accessibility}. 2025.  
+https://www.qualimero.com/en/blog/digital-accessibility-ai-revolution
+
+\bibitem{cacm}
+Communications of the ACM. \textit{AI and Accessibility}. June 1, 2020.  
+https://cacm.acm.org/opinion/ai-and-accessibility/
+
+\end{thebibliography}
+
 \end{document}
-
-
-
-
-
