@@ -4,6 +4,7 @@
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{float}
 
 \begin{document}
 
@@ -333,8 +334,6 @@ We designed five experiments, numbered by subsystem:
 
 \noindent\textbf{Purpose:} To determine whether the recording indicator switches states properly during typical voice interactions and whether it provides reliable feedback to users who depend on nonvisual cues.
 
-\noindent\textbf{Known issue uncovered:} The bot continues listening during its own speech, causing the recording indicator to remain active incorrectly. This experiment helped isolate whether the issue originated from frontend logic, asynchronous Web Speech API behavior, or backend latency.
-
 \subsection{Dataset}
 
 Because TalkAssist relies heavily on natural language input, each experiment generated a dataset of spoken commands and system outputs. The datasets are described below per experiment.
@@ -453,9 +452,9 @@ List Reminders & 100\% \\
 
 \subsubsection{Experiment 5 Results: GUI Indicator Test}
 
-Results were summarized in the following table:
+\noindent\textbf{GUI Indicator Behavior}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|}
 \hline
@@ -470,7 +469,9 @@ Long bot responses & Indicator OFF & Indicator ON entire duration & No \\
 \caption{GUI indicator test results}
 \end{table}
 
-\noindent Analysis: The issue stems from the online SpeechRecognition API continuously streaming even during bot speech. Because TalkAssist is voice-driven, this causes confusion for a visually impaired user who cannot rely on visual timing cues.
+\noindent Analysis: The issue stems from the online SpeechRecognition API continuously streaming even during bot speech. Because TalkAssist is designed to operate in a fully voice-driven mode, the system does not explicitly pause speech recognition during text-to-speech playback. As a result, the frontend remains in a listening state, causing the recording indicator to remain active incorrectly.
+
+\noindent A potential solution would be to temporarily disable or pause speech recognition while the assistant is speaking, then re-enable it once speech output completes. Alternatively, frontend event handling could be restructured to gate recording state changes based on confirmed turn completion rather than continuous audio input. These approaches would improve clarity and usability for visually impaired users who rely on accurate feedback cues.
 
 \subsubsection{Expected and Unexpected Findings}
 
@@ -633,18 +634,13 @@ I = description of tasks individually performed (see bullet points above)
 \section*{6 \quad Conclusion and Future Work}
 \addcontentsline{toc}{section}{6 Conclusion and Future Work}
 
-The development of TalkAssist allowed us to design and implement an accessible
-voice driven assistant that supports both online and offline functionality for
-visually impaired users. Through this project, we learned how to integrate
-speech technologies, manage system modes, and design intuitive interactions that
-reduce dependence on visual interfaces. While the current system performs core
-tasks reliably, future work includes expanding offline capabilities, improving
-natural language understanding, and integrating additional online services such
-as calendars and navigation. Long term improvements may also include mobile
-platform support and a more advanced wake word system to further enhance
-accessibility and user independence.
+\noindent The development of TalkAssist resulted in an accessible voice driven assistant that supports both online and offline functionality for visually impaired users. Through this project, we learned how to integrate speech technologies, manage system modes, and design interactions that minimize dependence on visual interfaces.
 
+\noindent Our implementation shows that offline mode currently performs more reliably than online mode for core tasks such as retrieving the time and date and managing reminders. Because all the processings are handled locally, offline mode offers faster responses and remains functional even without internet connectivity, an area where many existing assistants struggle.
+
+\noindent Online mode, while enabling access to external services, introduces challenges such as network dependency, latency, and synchronization issues when switching between modes. Future work will focus on improving online reliability through better state management, smoother mode transitions, and enhanced error handling. Additional improvements may include expanded offline language understanding, integration of online services, and more advanced wake word detection to further enhance accessibility and user independence.
 
 \end{document}
+
 
 
